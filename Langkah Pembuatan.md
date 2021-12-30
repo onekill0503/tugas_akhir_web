@@ -31,22 +31,22 @@
 
 ### buat model,controller dan halaman mobil
 
-`php artisan make:model Mobil`
+- jalankan perintah `php artisan make:model Mobil` untuk membuat model Mobil
 - lalu ubah kodenya di `./App/Models/`
-`php artisan make:controller MobilController --resource`
+- jalankan perintah `php artisan make:controller MobilController --resource` untuk membuat Controller Mobil
 - lalu ubah kodenya di `./App/Http/Controllers/`
 - buat file view index , create , form , dll.
 
 ### buat model,controller dan halaman transaksi
-`php artisan make:model Transaksi`
+- jalankan perintah `php artisan make:model Transaksi`  untuk membuat model Transaksi
 - lalu ubah kodenya di `./App/Models/`
-`php artisan make:model Pembeli`
+- jalankan perintah `php artisan make:model Pembeli` untuk membuat model Pembeli
 - lalu ubah kodenya di `./App/Models/`
-`php artisan make:controller TransaksiController --resource`
+- Jalankan Perintah `php artisan make:controller TransaksiController --resource` untuk membuat Controller Transaksi
 - lalu ubah kodenya di `./App/Http/Controllers/`
 - buat file view index , create , form , dll.
 
 ### buat controller pembeli dan halaman pembeli
-`php artisan make:controller PembeliController --resource`
+- jalankan perintah `php artisan make:controller PembeliController --resource` untuk membuat Controller Pembeli
 - lalu ubah kodenya di `./App/Http/Controllers/`
--buat file view index
+- buat file view index
