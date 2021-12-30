@@ -11,6 +11,9 @@
 `php artisan adminlte:plugins install`
 `composer require laravelcollective/html`
 
+### konfigurasi database
+- buka file .env lalu edit bagian database
+
 ### create database dan tabel
 - jalankan perintah cmd
 `php artisan make:migration mobil`
@@ -18,6 +21,7 @@
 `php artisan make:migration transaksi`
 
 - dan diubah kodenya di ./database/migration
+- jalankan perintah cmd `php aritsan migrate` untuk membuat tabel
 
 ### Setting RouteService
 - ubah kode pada `./App/Providers/RouteServiceProvider.php` bagian fungsi boot()
