@@ -12,8 +12,7 @@ class PembeliController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         // Mendapatkan data dari variabel search method get
         $search = \Request::get('search');
         $p = Pembeli::paginate(); // mengatur pagination

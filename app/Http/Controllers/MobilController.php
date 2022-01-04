@@ -12,8 +12,7 @@ class MobilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         // Mendapatkan data dari variabel search method get
         $search = \Request::get('search');
         $p = Mobil::paginate(); // mengatur pagination
@@ -37,8 +36,7 @@ class MobilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $mobil = new Mobil();
         return view('mobil.create' , compact('mobil'));
     }
@@ -49,8 +47,7 @@ class MobilController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         //melakukan cek validasi pada data yang di terima
         request()->validate(Mobil::$rules);
 
@@ -98,8 +95,7 @@ class MobilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id){
         $mobil = Mobil::find($id);
         return view('mobil.show', compact('mobil'));
     }
@@ -110,8 +106,7 @@ class MobilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $mobil = Mobil::find($id);
         return view('mobil.edit', compact('mobil'));
     }
@@ -123,28 +118,30 @@ class MobilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         // Menvalidasi data yang masuk
         request()->validate(Mobil::$rules);
         //mulai transaksi
         \DB::beginTransaction();
         try{
+            // Mengambil data mobil
             $mobil = Mobil::find($id);
+            // Jika foto tidak ada, biarkan pakai foto lama, jika ada hapus foto lama copy foto baru
             if ($request->hasFile('foto')){
-                $image_path = "foto/".$mobil->foto;
-                if (File::exists($image_path)){
-                    File::delete($image_path);
+                $image_path = "foto_mobil/".$mobil->foto;
+                if (\File::exists($image_path)){
+                    \File::delete($image_path);
                 }
                 $file = $request->file('foto');
                 $ext = $file->getClientOriginalExtension();
                 $fileFoto = $mobil->merk . $mobil->seri .".".$ext;
-                $destinationPath = 'foto/';
+                $destinationPath = 'foto_mobil/';
                 $file->move($destinationPath, $fileFoto);
             } else {
                 $fileFoto = $mobil->foto;
             }
 
+            // Simpan perubahan ke database.
             \DB::table('mobil')->where('id_mobil',$id)->update([
                 'merk'=>$request->merk,
                 'seri'=>$request->seri,
@@ -178,13 +175,18 @@ class MobilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         //mulai transaksi
         \DB::beginTransaction();
         try{
-            // Mengambil data.
+            // Mengambil data mobil.
             $mobil = Mobil::find($id);
+
+            // Menghapus file foto
+            $image_path = "foto_mobil/".$mobil->foto;
+            if (\File::exists($image_path)){
+                \File::delete($image_path);
+            }
 
             //hapus rekaman tabel mobil
             $Mobil_deleted = Mobil::find($id)->delete();
@@ -196,7 +198,7 @@ class MobilController extends Controller
             \DB::rollback();
 
             // Fungsi ini digunakan untuk menampilkan kesalahan pada sql
-            // dd($e->getMessage()); 
+            dd($e->getMessage()); 
 
             return redirect()->route('mobil.index')
                 ->with('success', 'ada kesalahan saat menghapus data...');

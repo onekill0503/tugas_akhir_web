@@ -16,8 +16,7 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         // Mendapatkan data dari variabel search method get
         $search = \Request::get('search');
         $p = Transaksi::paginate(); // mengatur pagination
@@ -45,8 +44,7 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $pembeli= new Pembeli();
         $mobil = \DB::table('mobil')->pluck('merk','id_mobil');
         $transaksi = new Transaksi();
@@ -59,8 +57,7 @@ class TransaksiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         //cek validasi masukan
         request()->validate(Transaksi::$rules);
 
@@ -113,8 +110,7 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id){
         $tx = Transaksi::find($id);
         $pembeli = Pembeli::find($tx->id_pembeli);
         $mobil = Mobil::find($tx->id_mobil);
@@ -128,8 +124,7 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $transaksi = Transaksi::find($id);
         $pembeli= Pembeli::find($transaksi->id_pembeli);
         $mobil = \DB::table('mobil')->pluck('merk','id_mobil');
@@ -145,8 +140,7 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         request()->validate(Transaksi::$rules);
         //mulai transaksi
         \DB::beginTransaction();
@@ -200,8 +194,7 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         //mulai transaksi
         \DB::beginTransaction();
         try{
